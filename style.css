@@ -1,0 +1,108 @@
+:root {
+  --bg-transparent-theme-primary: rgba(117, 23, 81, 0.7);
+  --bg-transparent-theme-secondary: rgba(12, 12, 12, 0.7);
+  --theme-primary: rgb(117, 23, 81);
+  --theme-secondary: rgb(12, 12, 12);
+  --theme-accent: rgb(255, 134, 209);
+  --card-rounded: 1rem;
+  --card-border: 0.25rem;
+  --card-padding: 0.5rem;
+  --x10: green;
+  --x100: red;
+  --x1000: orange;
+}
+
+body { 
+  color: lavender;
+  /* background: black; */
+  background-image: url("https://images.unsplash.com/photo-1631931931379-9dc037ac6a9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2020&q=80");
+  background-position: center;
+  background-size: fill;
+}
+
+div .text-x10 {
+  color: var(--x10);
+}
+
+div .text-x100 {
+  color: var(--x100);
+}
+
+div .text-x1000 {
+  color: var(--x1000);
+}
+
+.bg-theme-primary {
+  background-color: var(--theme-primary);
+}
+
+.bg-theme-secondary {
+  background-color: var(--theme-secondary);
+}
+
+.bg-theme-accent {
+  background-color: var(--theme-accent);
+}
+
+.text-theme-primary {
+  color: var(--theme-primary);
+}
+
+.text-theme-secondary {
+  color: var(--theme-secondary);
+}
+
+.text-theme-accent {
+  color: var(--theme-accent);
+}
+
+.slime {
+  user-select: none;
+}
+
+.slime:hover {
+  cursor: pointer;
+}
+
+.cursor {
+  user-select: none;
+}
+
+.cursor:hover {
+  cursor: pointer;
+}
+
+.card {
+  background-color: var(--bg-transparent-theme-secondary);
+  border: var(--card-border) solid var(--theme-primary);
+  border-radius: var(--card-rounded);
+  color: var(--theme-accent);
+  padding: var(--card-padding);
+}
+
+.title {
+  width: fit-content;
+}
+
+.shop-desc {
+  font-size: 10px;
+}
+
+.shop-bar {
+  background-color: var(--theme-accent);
+  height: 0.25rem;
+  width: 10rem;
+}
+
+.shop-item {
+  display: flex;
+}
+
+.floating-numbers {
+  position: relative;
+  left: 0;
+  top: 0;
+  height: fit-content;
+  width: fit-content;
+  display: none;
+}
