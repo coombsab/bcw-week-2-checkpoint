@@ -30,7 +30,9 @@ const manualSlimeElem = document.getElementById("manual-slime")
 const autoSlimeElem = document.getElementById("auto-slime")
 const shopElem = document.getElementById("shop")
 const badgesElem = document.getElementById("badges")
+const shopItemElem = document.querySelector(".shop-item")
 
+let slimeInfoToSave = [slime, clickIncrement, totalSlimeCollected, manualSlimeCollected, autoSlimeCollected]
 
 let upgrades = [
   {
@@ -194,7 +196,6 @@ function calculateSlimePerSecond() {
     }
   })
 
-
   return slimePerSecond
 }
 
@@ -213,7 +214,6 @@ function buyUpgrade(item) {
       // @ts-ignore
       upgrade.clicksPerTickCurrent += Math.round(upgrade.clicksPerTickCurrent * upgrade.clickAmountMultiplier)
     }
-    // @ts-ignore
 
     update()
   }
@@ -231,6 +231,7 @@ function getIcons(item) {
   let tempQuantity = upgrade.quantity
 
   while (tempQuantity >= 1000) {
+    // @ts-ignore
     templateX1000 += upgrade.iconX1000
     templateX100 = ""
     templateX10 = ""
@@ -238,17 +239,20 @@ function getIcons(item) {
     tempQuantity -= 1000
   }
   while (tempQuantity >= 100) {
+    // @ts-ignore
     templateX100 += upgrade.iconX100
     templateX10 = ""
     templateX1 = ""
     tempQuantity -= 100
   }
   while (tempQuantity >= 10) {
+    // @ts-ignore
     templateX10 += upgrade.iconX10
     templateX1 = ""
     tempQuantity -= 10
   }
   while (tempQuantity > 0) {
+    // @ts-ignore
     templateX1 += upgrade.icon
     tempQuantity--
   }
@@ -258,19 +262,21 @@ function getIcons(item) {
 }
 
 function hideUnhideUpgrades() {
-  let isItemUnhidden = false
+  console.log("Trying to hide or unhide upgrades")
+  
+  let isUpgradeCardHidden = false
   upgrades.forEach(upgrade => {
+    // console.log(upgrade.costCurrent, upgrade.isHidden, slime, shopItemElem)
     if (slime >= upgrade.costCurrent && upgrade.isHidden) {
-
       // @ts-ignore
       upgrade.shopItemElem.classList.remove("hidden")
       
       upgrade.isHidden = false
-      isItemUnhidden = true
+      isUpgradeCardHidden = true
     }
   })
 
-  if (isItemUnhidden) {
+  if (isUpgradeCardHidden) {
     // @ts-ignore
     shopElem.classList.remove("hidden")
   }
@@ -285,6 +291,7 @@ function addBadges() {
     }
   })
 
+  // @ts-ignore
   badgesElem.innerHTML = template
 }
 
@@ -346,19 +353,21 @@ function update() {
   // @ts-ignore
   autoSlimeElem.innerText = autoSlimeCollected
 
-
   addBadges()
   hideUnhideUpgrades()
-  // console.log("Update: ", updateCounter)
   updateCounter++
-
 
   // saveToLocal()
 }
 
 function saveToLocal() {
   window.localStorage.setItem("slime", JSON.stringify(slime))
+  window.localStorage.setItem("clickIncrement", JSON.stringify(clickIncrement))
+  window.localStorage.setItem("totalSlimeCollected", JSON.stringify(totalSlimeCollected))
+  window.localStorage.setItem("manualSlimeCollected", JSON.stringify(manualSlimeCollected))
+  window.localStorage.setItem("autoSlimeCollected", JSON.stringify(autoSlimeCollected))
   window.localStorage.setItem("upgrades", JSON.stringify(upgrades))
+  window.localStorage.setItem("badges", JSON.stringify(badges))
 }
 
 function loadFromLocal() {
@@ -368,11 +377,42 @@ function loadFromLocal() {
     slime = slimeData
   }
 
+ // @ts-ignore
+ let clickIncrementData = JSON.parse(window.localStorage.getItem("clickIncrement"))
+ if (clickIncrementData) {
+   clickIncrement = clickIncrementData
+ }
+
+  // @ts-ignore
+  let totalSlimeData = JSON.parse(window.localStorage.getItem("totalSlimeCollected"))
+  if (totalSlimeData) {
+    totalSlimeCollected = totalSlimeData
+  }
+
+   // @ts-ignore
+   let manualSlimeData = JSON.parse(window.localStorage.getItem("manualSlimeCollected"))
+   if (manualSlimeData) {
+     manualSlimeCollected = manualSlimeData
+   }
+
+    // @ts-ignore
+  let autoSlimeData = JSON.parse(window.localStorage.getItem("autoSlimeCollected"))
+  if (autoSlimeData) {
+    autoSlimeCollected = autoSlimeData
+  }
+
   // @ts-ignore
   let upgradesData = JSON.parse(window.localStorage.getItem("upgrades"))
   if (upgradesData) {
     upgrades = upgradesData
   }
+
+  // @ts-ignore
+  let badgesData = JSON.parse(window.localStorage.getItem("badges"))
+  if (badgesData) {
+    badges = badgesData
+  }
+
 }
 
 // loadFromLocal()
