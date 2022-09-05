@@ -24,7 +24,12 @@ const trappersUpgradeElem = document.getElementById("trappers-upgrade")
 const slimeHoundQuantityElem = document.getElementById("slime-hound-quantity")
 const slimeHoundUpgradeElem = document.getElementById("slime-hound-upgrade")
 const slimePerClickElem = document.getElementById("slime-per-click")
-const SlimePerSecondElem = document.getElementById("slime-per-second")
+const slimePerSecondElem = document.getElementById("slime-per-second")
+const totalSlimeElem = document.getElementById("total-slime")
+const manualSlimeElem = document.getElementById("manual-slime")
+const autoSlimeElem = document.getElementById("auto-slime")
+const shopElem = document.getElementById("shop")
+const badgesElem = document.getElementById("badges")
 
 
 let upgrades = [
@@ -41,7 +46,9 @@ let upgrades = [
     iconX1000: `<i class="mdi mdi-sword text-x1000"></i>`,
     clickAmountMultiplier: 2,
     clicksPerTickInitial: 1,
-    clicksPerTickCurrent: 1
+    clicksPerTickCurrent: 1,
+    isHidden: true,
+    shopItemElem: document.getElementById("click-augment-item")
   },
   {
     name: "clicker",
@@ -56,7 +63,9 @@ let upgrades = [
     iconX1000: `<i class="mdi mdi-sword-cross text-x1000"></i>`,
     clickAmountMultiplier: 1.2,
     clicksPerTickInitial: 1,
-    clicksPerTickCurrent: 1
+    clicksPerTickCurrent: 1,
+    isHidden: true,
+    shopItemElem: document.getElementById("clicker-item")
   },
   {
     name: "trappers",
@@ -71,7 +80,9 @@ let upgrades = [
     iconX1000: `<i class="mdi mdi-cog-pause text-x1000"></i>`,
     clickAmountMultiplier: 1.2,
     clicksPerTickInitial: 10,
-    clicksPerTickCurrent: 10
+    clicksPerTickCurrent: 10,
+    isHidden: true,
+    shopItemElem: document.getElementById("trappers-item")
   },
   {
     name: "slime-hound",
@@ -86,7 +97,36 @@ let upgrades = [
     iconX1000: `<i class="mdi mdi-dog-side text-x1000"></i>`,
     clickAmountMultiplier: 1.2,
     clicksPerTickInitial: 50,
-    clicksPerTickCurrent: 50
+    clicksPerTickCurrent: 50,
+    isHidden: true,
+    shopItemElem: document.getElementById("slime-hound-item")
+  }
+]
+
+let badges = [
+  {
+    symbol: "👿",
+    description: "You captured more than 100,000 slimes",
+    shortDesc: "100,000 slimes",
+    amount: 100000
+  },
+  {
+    symbol: "💀",
+    description: "You captured more than 1,000,000 slimes",
+    shortDesc: "1,000,000 slimes",
+    amount: 1000000
+  },
+  {
+    symbol: "☠️",
+    description: "You captured more than 10,000,000 slimes",
+    shortDesc: "10,000,000 slimes",
+    amount: 10000000
+  },
+  {
+    symbol: "👻",
+    description: "You captured more than 100,000,000 slimes",
+    shortDesc: "100,000,000 slimes",
+    amount: 100000000
   }
 ]
 
@@ -94,6 +134,7 @@ function hunt() {
   calculateManualClickIncrement()
   slimeSinceLastTick += clickIncrement
   slime += clickIncrement
+  manualSlimeCollected += clickIncrement
   update()
 }
 
@@ -131,6 +172,7 @@ function collectAutoUpgrades() {
     }
   })
   slime += autoSlimeGained
+  autoSlimeCollected += autoSlimeGained
   console.log(`Slime gain this tick (${updateCounter}): `, slimeSinceLastTick)
   slimeSinceLastTick = 0
   update()
@@ -215,6 +257,37 @@ function getIcons(item) {
   return template
 }
 
+function hideUnhideUpgrades() {
+  let isItemUnhidden = false
+  upgrades.forEach(upgrade => {
+    if (slime >= upgrade.costCurrent && upgrade.isHidden) {
+
+      // @ts-ignore
+      upgrade.shopItemElem.classList.remove("hidden")
+      
+      upgrade.isHidden = false
+      isItemUnhidden = true
+    }
+  })
+
+  if (isItemUnhidden) {
+    // @ts-ignore
+    shopElem.classList.remove("hidden")
+  }
+}
+
+function addBadges() {
+  let template = ""
+  badges.forEach(badge => {
+    if (totalSlimeCollected >= badge.amount) {
+      // @ts-ignore
+       template += `<div class="d-flex gap-2"><p>${badge.symbol}</p><p>${badge.shortDesc}</p></div>`
+    }
+  })
+
+  badgesElem.innerHTML = template
+}
+
 function update() {
   // @ts-ignore
   slimesCollectedElem.innerText = slime
@@ -260,13 +333,27 @@ function update() {
   slimePerClickElem.innerText = clickIncrement
 
   // @ts-ignore
-  SlimePerSecondElem.innerText = calculateSlimePerSecond()
+  slimePerSecondElem.innerText = calculateSlimePerSecond()
 
+  totalSlimeCollected = manualSlimeCollected + autoSlimeCollected
+
+  // @ts-ignore
+  totalSlimeElem.innerText = totalSlimeCollected
+
+  // @ts-ignore
+  manualSlimeElem.innerText = manualSlimeCollected
+
+  // @ts-ignore
+  autoSlimeElem.innerText = autoSlimeCollected
+
+
+  addBadges()
+  hideUnhideUpgrades()
   // console.log("Update: ", updateCounter)
   updateCounter++
 
 
-  saveToLocal()
+  // saveToLocal()
 }
 
 function saveToLocal() {
@@ -288,6 +375,6 @@ function loadFromLocal() {
   }
 }
 
-loadFromLocal()
+// loadFromLocal()
 update()
 setInterval(collectAutoUpgrades, tickInMilliSeconds)

@@ -20,6 +20,10 @@ body {
   background-size: fill;
 }
 
+p {
+  margin: 0;
+}
+
 div .text-x10 {
   color: var(--x10);
 }
@@ -104,5 +108,9 @@ div .text-x1000 {
   top: 0;
   height: fit-content;
   width: fit-content;
+  display: none;
+}
+
+.hidden {
   display: none;
 }

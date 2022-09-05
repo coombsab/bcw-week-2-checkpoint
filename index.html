@@ -28,37 +28,37 @@
       <section class="row p-5 justify-content-center align-items-center">
         <div class="col-md-3">
           <div class="card">
-            <p class="m-0">Slimes: <span id="slimes-collected"></span></p>
+            <p>Slimes: <span id="slimes-collected"></span></p>
             <div id="click-augments"></div>
             <div id="clickers"></div>
             <div id="trappers"></div>
             <div id="slime-hounds"></div>
           </div>
         </div>
-        <div class="col-md-6 text-center" id="hunt-card">
+        <div class="col-md-6 text-center my-4 my-md-0" id="hunt-card">
           <img src="assets/slime-metal-edited.png" alt="Metal" class="slime img-fluid" id="hunt-image" onclick="hunt()">
           <div class="card floating-numbers"><span  id="floating-numbers">SHABANG</span></div>
         </div>
         <div class="col-md-3">
-          <div class="card shop" id="shop">
+          <div class="card shop hidden" id="shop">
             <h5 class="m-0">Shop</h5>
             <span class="shop-desc">ICON NAME(QTY): COST</span>
             <div class="shop-bar"></div>
-            <div class="shop-item gap-2" id="shop-item">
+            <div class="shop-item gap-2 hidden" id="click-augment-item">
               <i class="mdi mdi-sword cursor" onclick="buyUpgrade('click-augment')"></i>
-              <p class="m-0">Augment Clicks(<span id="click-augment-quantity"></span>): <span id="click-augment-upgrade"></span></p>
+              <p>Augment Clicks(<span id="click-augment-quantity"></span>): <span id="click-augment-upgrade"></span></p>
             </div>
-            <div class="shop-item gap-2" id="shop-item">
+            <div class="shop-item gap-2 hidden" id="clicker-item">
               <i class="mdi mdi-sword-cross cursor" onclick="buyUpgrade('clicker')"></i>
-              <p class="m-0">Auto Clicker(<span id="clicker-quantity"></span>): <span id="clicker-upgrade"></span></p>
+              <p>Auto Clicker(<span id="clicker-quantity"></span>): <span id="clicker-upgrade"></span></p>
             </div>
-            <div class="shop-item gap-2" id="shop-item">
+            <div class="shop-item gap-2 hidden" id="trappers-item">
               <i class="mdi mdi-cog-pause cursor" onclick="buyUpgrade('trappers')"></i>
-              <p class="m-0">Trappers(<span id="trappers-quantity"></span>): <span id="trappers-upgrade"></span></p>
+              <p>Trappers(<span id="trappers-quantity"></span>): <span id="trappers-upgrade"></span></p>
             </div>
-            <div class="shop-item gap-2" id="shop-item">
+            <div class="shop-item gap-2 hidden" id="slime-hound-item">
               <i class="mdi mdi-dog-side cursor" onclick="buyUpgrade('slime-hound')"></i>
-              <p class="m-0">Slime Hounds(<span id="slime-hound-quantity"></span>): <span id="slime-hound-upgrade"></span></p>
+              <p>Slime Hounds(<span id="slime-hound-quantity"></span>): <span id="slime-hound-upgrade"></span></p>
             </div>
           </div>
         </div>
@@ -70,10 +70,19 @@
     <section class="container-fluid">
       <section class="row p-5">
         <div class="col-12 card">
-          <section class="row">
+          <section class="row gap-4 gap-md-0">
             <div class="col-md-4">
-              <p class="m-0">Slime per click: <span id="slime-per-click"></span></p>
-              <p class="m-0">Auto Slime per second: <span id="slime-per-second"></span></p>
+              <p>Slime per click: <span id="slime-per-click"></span></p>
+              <p>Auto Slime per second: <span id="slime-per-second"></span></p>
+            </div>
+            <div class="col-md-4">
+              <p>Total Slime: <span id="total-slime"></span></p>
+              <p>Manual Slime: <span id="manual-slime"></span></p>
+              <p>Auto Slime: <span id="auto-slime"></span></p>
+            </div>
+            <div class="col-md-4">
+              <p>Badges</p>
+              <div class="d-flex flex-column gap-1" id="badges"></div>
             </div>
           </section>
         </div>
