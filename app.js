@@ -261,6 +261,8 @@ function getIcons(item) {
   return template
 }
 
+
+// TODO Tweak this function to work when data is saved to local storage, may require tweaking save and/or load
 function hideUnhideUpgrades() {
   console.log("Trying to hide or unhide upgrades")
   
