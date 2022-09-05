@@ -264,7 +264,7 @@ function getIcons(item) {
 
 // TODO Tweak this function to work when data is saved to local storage, may require tweaking save and/or load
 function hideUnhideUpgrades() {
-  console.log("Trying to hide or unhide upgrades")
+  // console.log("Trying to hide or unhide upgrades")
   
   let isUpgradeCardHidden = false
   upgrades.forEach(upgrade => {
