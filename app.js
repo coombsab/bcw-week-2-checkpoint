@@ -49,7 +49,7 @@ let upgrades = [
     clickAmountMultiplier: 2,
     clicksPerTickInitial: 1,
     clicksPerTickCurrent: 1,
-    isHidden: true,
+    // isHidden: true,
     shopItemElem: document.getElementById("click-augment-item")
   },
   {
@@ -63,10 +63,10 @@ let upgrades = [
     iconX10: `<i class="mdi mdi-sword-cross text-x10"></i>`,
     iconX100: `<i class="mdi mdi-sword-cross text-x100"></i>`,
     iconX1000: `<i class="mdi mdi-sword-cross text-x1000"></i>`,
-    clickAmountMultiplier: 1.2,
+    clickAmountMultiplier: 1.5,
     clicksPerTickInitial: 1,
     clicksPerTickCurrent: 1,
-    isHidden: true,
+    // isHidden: true,
     shopItemElem: document.getElementById("clicker-item")
   },
   {
@@ -80,10 +80,10 @@ let upgrades = [
     iconX10: `<i class="mdi mdi-cog-pause text-x10"></i>`,
     iconX100: `<i class="mdi mdi-cog-pause text-x100"></i>`,
     iconX1000: `<i class="mdi mdi-cog-pause text-x1000"></i>`,
-    clickAmountMultiplier: 1.2,
+    clickAmountMultiplier: 1.3,
     clicksPerTickInitial: 10,
     clicksPerTickCurrent: 10,
-    isHidden: true,
+    // isHidden: true,
     shopItemElem: document.getElementById("trappers-item")
   },
   {
@@ -100,7 +100,7 @@ let upgrades = [
     clickAmountMultiplier: 1.2,
     clicksPerTickInitial: 50,
     clicksPerTickCurrent: 50,
-    isHidden: true,
+    // isHidden: true,
     shopItemElem: document.getElementById("slime-hound-item")
   }
 ]
@@ -264,21 +264,25 @@ function getIcons(item) {
 
 // TODO Tweak this function to work when data is saved to local storage, may require tweaking save and/or load
 function hideUnhideUpgrades() {
-  // console.log("Trying to hide or unhide upgrades")
-  
-  let isUpgradeCardHidden = false
+  // console.log("Looking for hidden shop items")
+  let isUpgradeCardHidden = true
   upgrades.forEach(upgrade => {
-    // console.log(upgrade.costCurrent, upgrade.isHidden, slime, shopItemElem)
-    if (slime >= upgrade.costCurrent && upgrade.isHidden) {
+    if (slime >= upgrade.costCurrent) {
       // @ts-ignore
-      upgrade.shopItemElem.classList.remove("hidden")
-      
-      upgrade.isHidden = false
-      isUpgradeCardHidden = true
+      if (upgrade.shopItemElem.classList.contains("hidden")) {
+        // console.log("unhiding ", upgrade.name)
+        // @ts-ignore
+        upgrade.shopItemElem.classList.remove("hidden")
+        
+        upgrade.isHidden = false
+        isUpgradeCardHidden = false
+      }
     }
   })
 
-  if (isUpgradeCardHidden) {
+  // @ts-ignore
+  if (!isUpgradeCardHidden && shopElem.classList.contains("hidden")) {
+    // console.log("unhiding shop")
     // @ts-ignore
     shopElem.classList.remove("hidden")
   }
@@ -298,6 +302,7 @@ function addBadges() {
 }
 
 function update() {
+  // console.log("updating")
   // @ts-ignore
   slimesCollectedElem.innerText = slime
 
@@ -373,6 +378,7 @@ function saveToLocal() {
 }
 
 function loadFromLocal() {
+  // console.log("grabbing local saves")
   // @ts-ignore
   let slimeData = JSON.parse(window.localStorage.getItem("slime"))
   if (slimeData) {
